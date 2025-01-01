@@ -5,9 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class StayeaseApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(StayeaseApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(StayeaseApplication.class, args);
+    }
 }
