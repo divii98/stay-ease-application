@@ -29,7 +29,7 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public void deleteHotel(Long id) {
-        if (hotelRepository.existsById(id))
+        if (!hotelRepository.existsById(id))
             throw new HotelNotFoundException("Hotel not found with given Id");
         hotelRepository.deleteById(id);
     }

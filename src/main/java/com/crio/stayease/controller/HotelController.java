@@ -1,6 +1,7 @@
 package com.crio.stayease.controller;
 
 import com.crio.stayease.exchange.HotelAddRequest;
+import com.crio.stayease.service.BookingService;
 import com.crio.stayease.service.HotelService;
 import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
@@ -13,8 +14,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/hotel")
 public class HotelController {
     HotelService hotelService;
-    public HotelController(HotelService hotelService){
+    BookingService bookingService;
+    public HotelController(HotelService hotelService, BookingService bookingService){
         this.hotelService = hotelService;
+        this.bookingService = bookingService;
     }
 
     @PostMapping("/add")
@@ -30,10 +33,21 @@ public class HotelController {
         hotelService.deleteHotel(id);
     }
 
-    @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateHotelControlller(@Valid @RequestBody HotelAddRequest request, @PathVariable long id){
+    public ResponseEntity<String> updateHotelControlller(@Valid @RequestBody HotelAddRequest request, @PathVariable long id){
         log.info("Hotel update request called for Id: "+id + "with body{}: "+request);
         return ResponseEntity.status(HttpStatus.OK).body(hotelService.updateHotel(id,request));
+    }
+
+    @PostMapping("/{hotelId}/book")
+    public ResponseEntity<String> hotelBookingController(@PathVariable Long hotelId){
+        log.info("Hotel booking request called for Hotel: "+ hotelId);
+        return ResponseEntity.status(HttpStatus.OK).body(bookingService.bookHotel(hotelId));
+    }
+
+    @DeleteMapping("/bookings/{bookingId}")
+    public ResponseEntity<String> hotelBookingCancelController(@PathVariable Long bookingId){
+        log.info("Hotel booking cancel request called for booking Id: "+ bookingId);
+        return ResponseEntity.status(HttpStatus.OK).body(bookingService.cancelBooking(bookingId));
     }
 }
