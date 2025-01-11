@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
 @Service
 public class BookingServiceImpl implements BookingService {
     @Autowired
@@ -52,5 +54,10 @@ public class BookingServiceImpl implements BookingService {
         bookingRepository.saveAndFlush(booking);
         hotelRepository.saveAndFlush(hotel);
         return "Booking Cancelled for given Id";
+    }
+
+    @Override
+    public List<Booking> getAllBookings() {
+        return bookingRepository.findAll();
     }
 }

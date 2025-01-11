@@ -43,6 +43,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/hotel/*").hasRole("HOTEL_MANAGER")
                         .requestMatchers("/hotel/*/book").hasRole("CUSTOMER")
                         .requestMatchers("/hotel/bookings/*").hasRole("HOTEL_MANAGER")
+                        .requestMatchers("/hotel/bookings").hasRole("HOTEL_MANAGER")
                         .anyRequest().authenticated()
                 ).exceptionHandling(ex -> ex.authenticationEntryPoint(new CustomAuthenticationEntryPoint()))
                 .sessionManagement(session ->

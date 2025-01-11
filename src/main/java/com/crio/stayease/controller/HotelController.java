@@ -1,5 +1,6 @@
 package com.crio.stayease.controller;
 
+import com.crio.stayease.entity.Booking;
 import com.crio.stayease.exchange.HotelAddRequest;
 import com.crio.stayease.service.BookingService;
 import com.crio.stayease.service.HotelService;
@@ -9,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 @Log4j2
 @RestController
 @RequestMapping("/hotel")
@@ -49,5 +53,10 @@ public class HotelController {
     public ResponseEntity<String> hotelBookingCancelController(@PathVariable Long bookingId){
         log.info("Hotel booking cancel request called for booking Id: "+ bookingId);
         return ResponseEntity.status(HttpStatus.OK).body(bookingService.cancelBooking(bookingId));
+    }
+
+    @GetMapping("/bookings")
+    public  ResponseEntity<List<Booking>> getAllBookings(){
+        return ResponseEntity.status(HttpStatus.OK).body(bookingService.getAllBookings());
     }
 }
